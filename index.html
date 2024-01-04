@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Koa</title>
+  </head>
+  <body>
+    <h1>Koa Client</h1>
+    <script>
+      const login = () => {
+        return new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest()
+          xhr.open('post', 'http://127.0.0.1:3007/login')
+          xhr.setRequestHeader('Content-Type', 'application/json')
+          xhr.send(JSON.stringify({ username: 'admin', password: 'admin123' }))
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+              try {
+                const res = JSON.parse(xhr.responseText)
+                const token = res.data.token
+                const Authorization = `Bearer ${token}`
+                sessionStorage.setItem('token', Authorization)
+                resolve(Authorization)
+              } catch (e) {
+                reject(e)
+              }
+            }
+          }
+        })
+      }
+      const getMethod = () => {
+        const xhr = new XMLHttpRequest()
+        xhr.open('get', 'http://127.0.0.1:3007/deploy/get')
+        const token = sessionStorage.getItem('token')
+        xhr.setRequestHeader('Authorization', token)
+        xhr.send()
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4) {
+            console.log(xhr.responseText)
+          }
+        }
+      }
+      const shell = () => {
+        const xhr = new XMLHttpRequest()
+        xhr.open('post', 'http://127.0.0.1:3007/deploy/runShell')
+        const token = sessionStorage.getItem('token')
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        xhr.setRequestHeader('Authorization', token)
+        xhr.send(JSON.stringify({ shellText: 'ls' }))
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4) {
+            console.log(xhr.responseText)
+          }
+        }
+      }
+      const fn = async () => {
+        await login()
+        shell()
+      }
+      fn()
+    </script>
+  </body>
+</html>

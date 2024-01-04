@@ -1,0 +1,30 @@
+{
+  "name": "deploy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=dev nodemon app.js",
+    "prod": "cross-env NODE_ENV=prod node app.js",
+    "eslintInit": "eslint --init"
+  },
+  "keywords": [],
+  "author": "lyn",
+  "license": "MIT",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2",
+    "koa": "^2.15.0",
+    "koa-bodyparser": "^4.4.1",
+    "koa-cors": "^0.0.16",
+    "koa-jwt": "^4.0.4",
+    "koa-log4": "^2.3.2",
+    "koa-router": "^12.0.1",
+    "koa-session": "^6.4.0",
+    "koa-static": "^5.0.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^7.32.0",
+    "nodemon": "^3.0.2"
+  }
+}
