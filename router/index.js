@@ -5,8 +5,7 @@ const { catchMiddleware, jwtMiddleware, loggerMiddleware } = require('../middlew
 const router = new KoaRouter()
 
 /** logger */
-const { accessLogger } = loggerMiddleware
-router.use(accessLogger())
+router.use(loggerMiddleware)
 
 /** catch must be first */
 router.use(catchMiddleware)

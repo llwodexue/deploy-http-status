@@ -7,10 +7,8 @@ const UNLESS_PATH = ['/', '/login', '/logout']
 
 function verifyJwtToken(ctx) {
   let token = ctx.headers[AUTHOR_KEY] || ''
-  console.log(token)
-  if (token.indexOf('Bearer') >= 0) {
-    token = token.replace('Bearer ', '')
-  }
+  if (!token) return ''
+  if (token.indexOf('Bearer') >= 0) token = token.replace('Bearer ', '')
   return jwt.verify(token, PRIVATE_KEY)
 }
 
