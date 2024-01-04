@@ -47,10 +47,12 @@ const loggerMiddleware = async (ctx, next) => {
   await next()
   const ms = new Date() - start
   const req = ctx.request
+  const res = ctx.response
   const msg = `
     请求用户: ${user},请求接口: ${req.url},请求类型: ${req.method}
     params入参: ${JSON.stringify(req.query)}
     body入参:  ${JSON.stringify(req.body)}
+    返回结果: ${JSON.stringify(res.body)}
     请求耗时: ${ms}ms\n`
   logger.info(msg)
 }
