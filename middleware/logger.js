@@ -57,5 +57,7 @@ const loggerMiddleware = async (ctx, next) => {
   logger.info(msg)
 }
 
-module.exports = loggerMiddleware
-module.systemLogger = log4js.getLogger('application')
+module.exports = {
+  loggerMiddleware,
+  systemLogger: log4js.getLogger('application')
+}
