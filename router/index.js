@@ -4,11 +4,11 @@ const { catchMiddleware, jwtMiddleware, loggerMiddleware } = require('../middlew
 
 const router = new KoaRouter()
 
-/** logger */
-router.use(loggerMiddleware)
-
 /** catch must be first */
 router.use(catchMiddleware)
+
+/** logger */
+router.use(loggerMiddleware)
 
 /** jwt 401 */
 router.use(jwtMiddleware)
