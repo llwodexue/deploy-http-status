@@ -1,11 +1,15 @@
 const Koa = require('koa')
 const cors = require('koa-cors')
+const KoaStatic = require('koa-static')
 const router = require('./router')
 const bodyParser = require('koa-bodyparser')
 const { systemLogger } = require('./middleware/logger')
 
 /** app */
 const app = new Koa()
+
+/** static */
+app.use(new KoaStatic(__dirname + "/public"));
 
 /** request */
 app.use(cors({ origin: true, credentials: true }))
