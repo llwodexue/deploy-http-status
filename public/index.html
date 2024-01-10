@@ -12,6 +12,9 @@
   </head>
   <body>
     <h1>Koa Client</h1>
+    <button id="btnSend">发送消息到服务器</button>
+
+    <script src="./socket.io.4.7.3.min.js"></script>
     <script>
       const login = () => {
         return new Promise((resolve, reject) => {
@@ -63,6 +66,15 @@
         await login()
         shell()
       }
+      const socketIo = () => {
+        window.socket = io()
+        const btnSend = document.getElementById('btnSend')
+        btnSend.onclick = () => {
+          window.socket.emit('message', 'hello')
+        }
+      }
+
+      socketIo()
       fn()
     </script>
   </body>
