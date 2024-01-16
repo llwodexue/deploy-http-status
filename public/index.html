@@ -38,7 +38,7 @@
           }
         })
       }
-      const getMethod = () => {
+      const deployGet = () => {
         const xhr = new XMLHttpRequest()
         xhr.open('get', 'http://127.0.0.1:3007/deploy/get')
         const token = sessionStorage.getItem('token')
@@ -50,7 +50,7 @@
           }
         }
       }
-      const shell = () => {
+      const deployRunShell = () => {
         const xhr = new XMLHttpRequest()
         xhr.open('post', 'http://127.0.0.1:3007/deploy/runShell')
         const token = sessionStorage.getItem('token')
@@ -63,24 +63,44 @@
           }
         }
       }
+      const deployServer = () => {
+        const xhr = new XMLHttpRequest()
+        xhr.open('post', 'http://127.0.0.1:3007/deploy/server')
+        const token = sessionStorage.getItem('token')
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        xhr.setRequestHeader('Authorization', token)
+        xhr.send(JSON.stringify({ shellText: 'ls' }))
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4) {
+            console.log(xhr.responseText)
+          }
+        }
+      }
       const fn = async () => {
         await login()
-        shell()
+        deployRunShell()
       }
       const socketIo = () => {
-        window.socket = io()
+        const socket = io('http://127.0.0.1:3007/')
+        window.socket = socket
+
         const btnSend = document.getElementById('btnSend')
         btnSend.onclick = () => {
-          window.socket.emit('message', 'hello')
+          socket.emit('message', {
+            name: 'bird',
+            age: 12
+          })
+          deployServer()
         }
         const btnSendError = document.getElementById('btnSendError')
         btnSendError.onclick = () => {
           window.socket.emit('client error')
         }
+        window.socket.on('message', data => console.log(data))
       }
 
       socketIo()
-      // fn()
+      fn()
     </script>
   </body>
 </html>

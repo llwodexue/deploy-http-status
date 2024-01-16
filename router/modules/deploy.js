@@ -1,6 +1,8 @@
 const KoaRouter = require('koa-router')
 const { SUCCESS } = require('../../utils/httpStatus')
 const fs = require('fs')
+const { exec } = require('child_process')
+const { systemLogger } = require('../../middleware')
 
 const router = new KoaRouter()
 router.prefix('/deploy')
@@ -20,11 +22,24 @@ router.get('/get', ctx => {
 })
 
 /** 执行脚本 */
-router.post('/runShell', ctx => {
-  let resData = ctx.request.body
-  const execFn = () => {
-    return new Promise((resolve, reject) => {})
-  }
+const runShellFn = shell => {
+  return new Promise((resolve, reject) => {
+    const child = exec(shell)
+    child.stdout.on('data', data => resolve(data))
+    child.stderr.on('data', err => {
+      systemLogger.error('stderr:', err)
+      reject(err)
+    })
+    child.on('close', () => {})
+  })
+}
+router.post('/runShell', async ctx => {
+  const shell = 'cd public && ls -l'
+  const data = await runShellFn(shell)
+  ctx.body = { ...SUCCESS, data }
+})
+
+router.post('/server', async ctx => {
   ctx.body = {}
 })
 
