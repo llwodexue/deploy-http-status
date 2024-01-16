@@ -40,7 +40,7 @@ router.post('/runShell', async ctx => {
 })
 
 router.post('/server', async ctx => {
-  ctx.body = {}
+  ctx.body = { ...SUCCESS }
 })
 
 module.exports = router
