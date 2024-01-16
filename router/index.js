@@ -1,5 +1,5 @@
 const KoaRouter = require('koa-router')
-const { deployRouter, userRouter } = require('./modules')
+const { deployRouter, userRouter, httpRouter } = require('./modules')
 const { catchMiddleware, jwtMiddleware, loggerMiddleware } = require('../middleware')
 
 const router = new KoaRouter()
@@ -18,5 +18,7 @@ router.use(jwtMiddleware)
 router.use(userRouter.routes())
 // deploy module
 router.use(deployRouter.routes())
+// http module
+router.use(httpRouter.routes())
 
 module.exports = router

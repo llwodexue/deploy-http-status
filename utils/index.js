@@ -49,3 +49,14 @@ exports.parseTime = function parseTime(time, pattern) {
   })
   return time_str
 }
+
+/**
+ * *休眠，默认休眠1s
+ * @param {number} timer
+ * @returns
+ */
+exports.sleep = function sleep(timer = 1000) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(), timer)
+  })
+}

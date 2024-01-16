@@ -1,7 +1,7 @@
 const KoaRouter = require('koa-router')
-const { SUCCESS } = require('../../utils/httpStatus')
 const fs = require('fs')
 const { exec } = require('child_process')
+const { SUCCESS } = require('../../utils/httpStatus')
 const { systemLogger } = require('../../middleware')
 
 const router = new KoaRouter()
@@ -37,16 +37,6 @@ router.post('/runShell', async ctx => {
   const shell = 'cd nginx/html && ls -l'
   const data = await runShellFn(shell)
   ctx.body = { ...SUCCESS, data }
-})
-
-const sleep = (timer = 1000) => {
-  return new Promise(resolve => {
-    setTimeout(() => resolve(), timer)
-  })
-}
-router.post('/gateTimeout', async ctx => {
-  await sleep(5000)
-  ctx.body = { ...SUCCESS }
 })
 
 module.exports = router
