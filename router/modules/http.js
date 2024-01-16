@@ -1,5 +1,5 @@
 const KoaRouter = require('koa-router')
-const { SUCCESS, ERROR } = require('../../utils/httpStatus')
+const { SUCCESS } = require('../../utils/httpStatus')
 const { sleep } = require('../../utils')
 
 const router = new KoaRouter()
@@ -7,7 +7,7 @@ router.prefix('/http')
 
 /** 500 */
 router.post('/serverError', async () => {
-  throw new ERROR('server error')
+  throw new Error('server error')
 })
 
 /** 502 */
