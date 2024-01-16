@@ -15,7 +15,7 @@
     <button id="btnSend" style="margin: 0 10px 10px 0">发送正确消息到服务器</button>
     <button id="btnSendError">发送错误消息到服务器</button>
 
-    <script src="./socket.io.4.7.3.min.js"></script>
+    <script src="./js/socket.io.4.7.3.min.js"></script>
     <script>
       const login = () => {
         return new Promise((resolve, reject) => {
@@ -63,19 +63,6 @@
           }
         }
       }
-      const deployServer = () => {
-        const xhr = new XMLHttpRequest()
-        xhr.open('post', 'http://127.0.0.1:3007/deploy/server')
-        const token = sessionStorage.getItem('token')
-        xhr.setRequestHeader('Content-Type', 'application/json')
-        xhr.setRequestHeader('Authorization', token)
-        xhr.send(JSON.stringify({ shellText: 'ls' }))
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState == 4) {
-            console.log(xhr.responseText)
-          }
-        }
-      }
       const fn = async () => {
         await login()
         deployRunShell()
@@ -90,7 +77,6 @@
             name: 'bird',
             age: 12
           })
-          deployServer()
         }
         const btnSendError = document.getElementById('btnSendError')
         btnSendError.onclick = () => {

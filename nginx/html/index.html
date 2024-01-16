@@ -12,11 +12,14 @@
   </head>
   <body>
     <h1>Koa Client</h1>
+    <div>
+      <button id="httpSend" style="margin: 0 10px 10px 0">测试状态码</button>
+    </div>
     <button id="btnSend" style="margin: 0 10px 10px 0">发送正确消息到服务器</button>
     <button id="btnSendError">发送错误消息到服务器</button>
 
-    <script src="./axios.1.5.0.min.js"></script>
-    <script src="./socket.io.4.7.3.min.js"></script>
+    <script src="./js/axios.1.5.0.min.js"></script>
+    <script src="./js/socket.io.4.7.3.min.js"></script>
     <script>
       /** Axios */
       const AUTHOR_KEY = 'Authorization'
@@ -38,6 +41,8 @@
       request.interceptors.response.use(response => {
         return response.data
       })
+      window.request = request
+
       const login = async () => {
         const res = await request({
           method: 'post',
@@ -59,12 +64,6 @@
           data: { shellText: 'ls' }
         })
       }
-      const httpTimeout = async () => {
-        const res = await request({
-          method: 'post',
-          url: '/http/gatewayTimeout'
-        })
-      }
       const fn = async () => {
         await login()
         deployRunShell()
@@ -79,7 +78,6 @@
             name: 'bird',
             age: 12
           })
-          httpTimeout()
         }
         const btnSendError = document.getElementById('btnSendError')
         btnSendError.onclick = () => {
@@ -91,5 +89,6 @@
       socketIo()
       fn()
     </script>
+    <script src="./js/httpError.js"></script>
   </body>
 </html>

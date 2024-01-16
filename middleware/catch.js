@@ -11,6 +11,7 @@ const catchMiddleware = (ctx, next) => {
     } else {
       const msg = err.message || '系统错误'
       const code = err.code || 500
+      ctx.status = code
       ctx.body = { ...ERROR, ...{ msg, code } }
     }
   })

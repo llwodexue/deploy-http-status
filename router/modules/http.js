@@ -1,9 +1,19 @@
 const KoaRouter = require('koa-router')
-const { SUCCESS } = require('../../utils/httpStatus')
+const { SUCCESS, ERROR } = require('../../utils/httpStatus')
 const { sleep } = require('../../utils')
 
 const router = new KoaRouter()
 router.prefix('/http')
+
+/** 500 */
+router.post('/serverError', async () => {
+  throw new ERROR('server error')
+})
+
+/** 502 */
+router.post('/gatewayBad', async ctx => {
+  ctx.body = { ...SUCCESS }
+})
 
 /** 504 */
 router.post('/gatewayTimeout', async ctx => {
