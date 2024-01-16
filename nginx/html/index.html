@@ -59,10 +59,10 @@
           data: { shellText: 'ls' }
         })
       }
-      const deployTimeout = async () => {
+      const httpTimeout = async () => {
         const res = await request({
           method: 'post',
-          url: '/deploy/gatewayTimeout'
+          url: '/http/gatewayTimeout'
         })
       }
       const fn = async () => {
@@ -79,7 +79,7 @@
             name: 'bird',
             age: 12
           })
-          deployTimeout()
+          httpTimeout()
         }
         const btnSendError = document.getElementById('btnSendError')
         btnSendError.onclick = () => {
