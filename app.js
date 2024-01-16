@@ -11,7 +11,7 @@ const { listenAndEmitInfo } = require('./websocket')
 const app = new Koa()
 
 /** static */
-app.use(new KoaStatic(__dirname + '/public'))
+app.use(new KoaStatic(__dirname + '/nginx/html'))
 
 /** request */
 app.use(cors({ origin: true, credentials: true }))
