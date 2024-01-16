@@ -24,7 +24,7 @@ app.use(router.allowedMethods()) // 405 Method Not Allowed
 
 /** socket.io */
 const server = require('http').createServer(app.callback())
-const io = require('socket.io')(server)
+const io = require('socket.io')(server, { cors: true })
 listenAndEmitInfo(io)
 
 /** server */
