@@ -14,7 +14,8 @@ const app = new Koa()
 app.use(new KoaStatic(__dirname + '/nginx/html'))
 
 /** request */
-app.use(cors({ origin: true, credentials: true }))
+// app.use(cors({ origin: true, credentials: true }))
+app.use(cors())
 app.use(bodyParser()) // post body
 app.use(helmet()) // safe header
 

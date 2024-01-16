@@ -14,9 +14,6 @@ router.use(loggerMiddleware)
 router.use(jwtMiddleware)
 
 /** router */
-router.get('/', async ctx => {
-  ctx.body = 'welcome to index'
-})
 // login module
 router.use(userRouter.routes())
 // deploy module

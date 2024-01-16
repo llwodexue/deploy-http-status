@@ -15,66 +15,55 @@
     <button id="btnSend" style="margin: 0 10px 10px 0">发送正确消息到服务器</button>
     <button id="btnSendError">发送错误消息到服务器</button>
 
+    <script src="./axios.1.5.0.min.js"></script>
     <script src="./socket.io.4.7.3.min.js"></script>
     <script>
-      const login = () => {
-        return new Promise((resolve, reject) => {
-          const xhr = new XMLHttpRequest()
-          xhr.open('post', 'http://127.0.0.1:3007/login')
-          xhr.setRequestHeader('Content-Type', 'application/json')
-          xhr.send(JSON.stringify({ username: 'admin', password: 'admin123' }))
-          xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4) {
-              try {
-                const res = JSON.parse(xhr.responseText)
-                const token = res.data.token
-                const Authorization = `Bearer ${token}`
-                sessionStorage.setItem('token', Authorization)
-                resolve(Authorization)
-              } catch (e) {
-                reject(e)
-              }
-            }
-          }
+      /** Axios */
+      const AUTHOR_KEY = 'Authorization'
+      const TOKEN_KEY = 'Token'
+      const getToken = () => sessionStorage.getItem(TOKEN_KEY)
+      const setToken = token => sessionStorage.setItem(TOKEN_KEY, token)
+      const request = axios.create({
+        baseURL: '/api',
+        withCredentials: true,
+        timeout: 10 * 1000,
+        headers: { 'Content-Type': 'application/json' }
+      })
+      request.interceptors.request.use(config => {
+        if (config.url !== '/login') {
+          config.headers[AUTHOR_KEY] = 'Bearer ' + getToken()
+        }
+        return config
+      })
+      request.interceptors.response.use(response => {
+        return response.data
+      })
+      const login = async () => {
+        const res = await request({
+          method: 'post',
+          url: '/login',
+          data: { username: 'admin', password: 'admin123' }
+        })
+        setToken(res.data.token)
+      }
+      const deployGet = async () => {
+        const res = await request({
+          method: 'get',
+          url: '/deploy/get'
         })
       }
-      const deployGet = () => {
-        const xhr = new XMLHttpRequest()
-        xhr.open('get', 'http://127.0.0.1:3007/deploy/get')
-        const token = sessionStorage.getItem('token')
-        xhr.setRequestHeader('Authorization', token)
-        xhr.send()
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState == 4) {
-            console.log(xhr.responseText)
-          }
-        }
+      const deployRunShell = async () => {
+        const res = await request({
+          method: 'post',
+          url: '/deploy/runShell',
+          data: { shellText: 'ls' }
+        })
       }
-      const deployRunShell = () => {
-        const xhr = new XMLHttpRequest()
-        xhr.open('post', 'http://127.0.0.1:3007/deploy/runShell')
-        const token = sessionStorage.getItem('token')
-        xhr.setRequestHeader('Content-Type', 'application/json')
-        xhr.setRequestHeader('Authorization', token)
-        xhr.send(JSON.stringify({ shellText: 'ls' }))
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState == 4) {
-            console.log(xhr.responseText)
-          }
-        }
-      }
-      const deployServer = () => {
-        const xhr = new XMLHttpRequest()
-        xhr.open('post', 'http://127.0.0.1:3007/deploy/server')
-        const token = sessionStorage.getItem('token')
-        xhr.setRequestHeader('Content-Type', 'application/json')
-        xhr.setRequestHeader('Authorization', token)
-        xhr.send(JSON.stringify({ shellText: 'ls' }))
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState == 4) {
-            console.log(xhr.responseText)
-          }
-        }
+      const deployTimeout = async () => {
+        const res = await request({
+          method: 'post',
+          url: '/deploy/gateTimeout'
+        })
       }
       const fn = async () => {
         await login()
@@ -90,7 +79,7 @@
             name: 'bird',
             age: 12
           })
-          deployServer()
+          deployTimeout()
         }
         const btnSendError = document.getElementById('btnSendError')
         btnSendError.onclick = () => {

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Cache" content="no-cache" />
+    <link rel="icon" href="./favicon.ico" />
+    <title>Koa</title>
+  </head>
+  <body>
+    <h1>Koa Client</h1>
+    <button id="btnSend" style="margin: 0 10px 10px 0">发送正确消息到服务器</button>
+    <button id="btnSendError">发送错误消息到服务器</button>
+
+    <script src="./socket.io.4.7.3.min.js"></script>
+    <script>
+      const login = () => {
+        return new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest()
+          xhr.open('post', 'http://127.0.0.1:3007/login')
+          xhr.setRequestHeader('Content-Type', 'application/json')
+          xhr.send(JSON.stringify({ username: 'admin', password: 'admin123' }))
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+              try {
+                const res = JSON.parse(xhr.responseText)
+                const token = res.data.token
+                const Authorization = `Bearer ${token}`
+                sessionStorage.setItem('token', Authorization)
+                resolve(Authorization)
+              } catch (e) {
+                reject(e)
+              }
+            }
+          }
+        })
+      }
+      const deployGet = () => {
+        const xhr = new XMLHttpRequest()
+        xhr.open('get', 'http://127.0.0.1:3007/deploy/get')
+        const token = sessionStorage.getItem('token')
+        xhr.setRequestHeader('Authorization', token)
+        xhr.send()
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4) {
+            console.log(xhr.responseText)
+          }
+        }
+      }
+      const deployRunShell = () => {
+        const xhr = new XMLHttpRequest()
+        xhr.open('post', 'http://127.0.0.1:3007/deploy/runShell')
+        const token = sessionStorage.getItem('token')
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        xhr.setRequestHeader('Authorization', token)
+        xhr.send(JSON.stringify({ shellText: 'ls' }))
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4) {
+            console.log(xhr.responseText)
+          }
+        }
+      }
+      const deployServer = () => {
+        const xhr = new XMLHttpRequest()
+        xhr.open('post', 'http://127.0.0.1:3007/deploy/server')
+        const token = sessionStorage.getItem('token')
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        xhr.setRequestHeader('Authorization', token)
+        xhr.send(JSON.stringify({ shellText: 'ls' }))
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4) {
+            console.log(xhr.responseText)
+          }
+        }
+      }
+      const fn = async () => {
+        await login()
+        deployRunShell()
+      }
+      const socketIo = () => {
+        const socket = io('http://127.0.0.1:3007/')
+        window.socket = socket
+
+        const btnSend = document.getElementById('btnSend')
+        btnSend.onclick = () => {
+          socket.emit('message', {
+            name: 'bird',
+            age: 12
+          })
+          deployServer()
+        }
+        const btnSendError = document.getElementById('btnSendError')
+        btnSendError.onclick = () => {
+          window.socket.emit('client error')
+        }
+        window.socket.on('message', data => console.log(data))
+      }
+
+      socketIo()
+      fn()
+    </script>
+  </body>
+</html>
