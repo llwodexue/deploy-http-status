@@ -15,6 +15,13 @@
       url: '/http/unauthorized'
     })
   }
+  /** 404 */
+  const notFound = async () => {
+    await request({
+      method: 'post',
+      url: '/http/notFound'
+    })
+  }
   /** 504 */
   const gatewayTimeout = async () => {
     await request({
