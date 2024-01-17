@@ -27,10 +27,15 @@ router.post('/forbidden', async ctx => {
   let user = null
   if (decodeJwt) user = decodeJwt.username
   if (user !== 'superAdmin') {
-    ctx.body = FORBIDDEN
+    throw { ...FORBIDDEN, message: `${user} 没有权限` }
   } else {
     ctx.body = SUCCESS
   }
+})
+
+/** 405 */
+router.get('/methodNotAllow', async ctx => {
+  ctx.body = SUCCESS
 })
 
 /** 500 */

@@ -15,11 +15,25 @@
       url: '/http/unauthorized'
     })
   }
+  /** 403 */
+  const forbidden = async () => {
+    await request({
+      method: 'post',
+      url: '/http/forbidden'
+    })
+  }
   /** 404 */
   const notFound = async () => {
     await request({
       method: 'post',
       url: '/http/notFound'
+    })
+  }
+  /** 405 */
+  const methodNotAllow = async () => {
+    await request({
+      method: 'post',
+      url: '/http/methodNotAllow'
     })
   }
   /** 504 */
@@ -53,5 +67,7 @@
     unauthorized()
     badRequest()
     notFound()
+    forbidden()
+    methodNotAllow()
   }
 })()
