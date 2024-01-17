@@ -38,23 +38,27 @@ log4js.configure({
 const logger = log4js.getLogger('access')
 
 const loggerMiddleware = async (ctx, next) => {
-  const start = new Date()
-  const decodeJwt = verifyJwtToken(ctx)
-  let user = null
-  if (decodeJwt) {
-    user = decodeJwt.username
-  }
-  await next()
-  const ms = new Date() - start
-  const req = ctx.request
-  const res = ctx.response
-  const msg = `
+  try {
+    const start = new Date()
+    const decodeJwt = verifyJwtToken(ctx)
+    let user = null
+    if (decodeJwt) {
+      user = decodeJwt.username
+    }
+    await next()
+    const ms = new Date() - start
+    const req = ctx.request
+    const res = ctx.response
+    const msg = `
     请求用户: ${user},请求接口: ${req.url},请求类型: ${req.method}
     params入参: ${JSON.stringify(req.query)}
     body入参:  ${JSON.stringify(req.body)}
     返回结果: ${JSON.stringify(res.body)}
     请求耗时: ${ms}ms\n`
-  logger.info(msg)
+    logger.info(msg)
+  } catch (e) {
+    logger.error(e)
+  }
 }
 
 module.exports = {

@@ -1,6 +1,7 @@
 const KoaRouter = require('koa-router')
-const { SUCCESS, BAD_REQUEST, ERROR } = require('../../utils/httpStatus')
+const { SUCCESS, BAD_REQUEST, ERROR, FORBIDDEN } = require('../../utils/httpStatus')
 const { sleep } = require('../../utils')
+const { verifyJwtToken } = require('../../utils/jwtToken')
 
 const router = new KoaRouter()
 router.prefix('/http')
@@ -18,6 +19,18 @@ router.post('/badRequest', async ctx => {
 /** 401 */
 router.post('/unauthorized', async ctx => {
   ctx.body = SUCCESS
+})
+
+/** 403 */
+router.post('/forbidden', async ctx => {
+  const decodeJwt = verifyJwtToken(ctx)
+  let user = null
+  if (decodeJwt) user = decodeJwt.username
+  if (user !== 'superAdmin') {
+    ctx.body = FORBIDDEN
+  } else {
+    ctx.body = SUCCESS
+  }
 })
 
 /** 500 */
