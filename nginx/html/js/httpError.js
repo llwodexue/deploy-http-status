@@ -59,8 +59,8 @@
     })
   }
 
-  const httpSend = document.getElementById('httpSend')
-  httpSend.onclick = () => {
+  const httpErrorSend = document.getElementById('httpErrorSend')
+  httpErrorSend.onclick = () => {
     gatewayTimeout()
     gatewayBad()
     serverError()
@@ -69,5 +69,36 @@
     notFound()
     forbidden()
     methodNotAllow()
+  }
+})()
+
+~(function () {
+  const request = window.request
+  /** 204 */
+  const noContent = async () => {
+    await request({
+      method: 'get',
+      url: '/http/noContent'
+    })
+  }
+  /** 301 */
+  const movedPermanently = async () => {
+    await request({
+      method: 'get',
+      url: '/http/movedPermanently'
+    })
+  }
+  /** 302 */
+  const found = async () => {
+    await request({
+      method: 'get',
+      url: '/http/found'
+    })
+  }
+  const httpOkSend = document.getElementById('httpOkSend')
+  httpOkSend.onclick = () => {
+    movedPermanently()
+    found()
+    noContent()
   }
 })()

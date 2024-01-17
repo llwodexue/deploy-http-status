@@ -6,6 +6,27 @@ const { verifyJwtToken } = require('../../utils/jwtToken')
 const router = new KoaRouter()
 router.prefix('/http')
 
+/** 200 */
+router.get('/ok', async ctx => {
+  ctx.body = SUCCESS
+})
+
+/** 204 */
+router.get('/noContent', async ctx => {
+  ctx.body = null
+})
+
+/** 301 */
+router.get('/movedPermanently', async ctx => {
+  ctx.status = 301
+  ctx.redirect('/api/http/ok')
+})
+
+/** 302 */
+router.get('/found', async ctx => {
+  ctx.redirect('/api/http/ok')
+})
+
 /** 400 */
 router.post('/badRequest', async ctx => {
   const id = ctx.request.body?.id
