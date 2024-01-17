@@ -13,7 +13,7 @@ router.post('/login', ctx => {
   if (userExit) {
     if (password === userExit.password) {
       const token = jwt.sign({ username }, PRIVATE_KEY, { expiresIn: JWT_EXPIRED })
-      ctx.body = { ...SUCCESS, ...{ data: { token }, msg: '登录成功' } }
+      ctx.body = { ...SUCCESS, ...{ data: { token }, message: '登录成功' } }
     } else {
       ctx.body = PASSWORD_ERROR
     }
@@ -26,11 +26,11 @@ router.get('/getUserInfo', ctx => {
   if (decodeJwt) {
     const username = decodeJwt.username
     let user = { operator: { operatorName: username, avatar: null } }
-    ctx.body = { ...SUCCESS, data: user, msg: '用户信息查询成功' }
+    ctx.body = { ...SUCCESS, data: user, message: '用户信息查询成功' }
   }
 })
 router.post('/logout', ctx => {
-  ctx.body = { ...SUCCESS, ...{ msg: '退出成功' } }
+  ctx.body = { ...SUCCESS, ...{ message: '退出成功' } }
 })
 
 module.exports = router

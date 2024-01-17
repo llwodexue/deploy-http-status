@@ -1,5 +1,13 @@
 ~(() => {
   const request = window.request
+  /** 400 */
+  const badRequest = async () => {
+    await request({
+      method: 'post',
+      url: '/http/badRequest',
+      params: { id: 1 }
+    })
+  }
   /** 401 */
   const unauthorized = async () => {
     await request({
@@ -36,5 +44,7 @@
     gatewayBad()
     serverError()
     unauthorized()
+    badRequest()
+    notFound()
   }
 })()
