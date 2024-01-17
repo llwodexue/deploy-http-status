@@ -1,5 +1,12 @@
 ~(() => {
   const request = window.request
+  /** 401 */
+  const unauthorized = async () => {
+    await request({
+      method: 'post',
+      url: '/http/unauthorized'
+    })
+  }
   /** 504 */
   const gatewayTimeout = async () => {
     await request({
@@ -28,5 +35,6 @@
     gatewayTimeout()
     gatewayBad()
     serverError()
+    unauthorized()
   }
 })()

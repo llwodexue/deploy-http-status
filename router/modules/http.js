@@ -5,6 +5,11 @@ const { sleep } = require('../../utils')
 const router = new KoaRouter()
 router.prefix('/http')
 
+/** 401 */
+router.post('/unauthorized', async (ctx) => {
+  ctx.body = { ...SUCCESS }
+})
+
 /** 500 */
 router.post('/serverError', async () => {
   throw new Error('server error')

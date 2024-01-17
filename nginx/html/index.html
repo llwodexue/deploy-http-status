@@ -33,7 +33,7 @@
         headers: { 'Content-Type': 'application/json' }
       })
       request.interceptors.request.use(config => {
-        if (config.url !== '/login') {
+        if (!['/login', '/http/unauthorized'].includes(config.url)) {
           config.headers[AUTHOR_KEY] = 'Bearer ' + getToken()
         }
         return config
