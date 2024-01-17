@@ -47,11 +47,11 @@
 
   const httpSend = document.getElementById('httpSend')
   httpSend.onclick = () => {
-    // gatewayTimeout()
-    // gatewayBad()
-    // serverError()
-    // unauthorized()
-    // badRequest()
+    gatewayTimeout()
+    gatewayBad()
+    serverError()
+    unauthorized()
+    badRequest()
     notFound()
   }
 })()
