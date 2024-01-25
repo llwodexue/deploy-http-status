@@ -1,5 +1,5 @@
 {
-  "name": "koa-demo",
+  "name": "koa-test-demo",
   "version": "1.0.0",
   "description": "执行shell脚本示例, HTTP状态码示例（Nginx演示）, 文件下载示例（各种格式和分片下载）",
   "main": "app.js",
