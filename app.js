@@ -14,8 +14,8 @@ const app = new Koa()
 app.use(new KoaStatic(__dirname + '/nginx/html'))
 
 /** request */
-// app.use(cors({ origin: true, credentials: true }))
-app.use(cors())
+app.use(cors({ origin: true, credentials: true }))
+// app.use(cors())
 app.use(bodyParser()) // post body
 app.use(helmet()) // safe header
 
@@ -30,5 +30,7 @@ listenAndEmitInfo(io)
 
 /** server */
 const port = 3007
+const nginxPort = 8080
 server.listen(port) // need server listen not app listen
 systemLogger.info('running on http://127.0.0.1:%s', port)
+systemLogger.info('please click it, nginx start on https://127.0.0.1:%s', nginxPort)

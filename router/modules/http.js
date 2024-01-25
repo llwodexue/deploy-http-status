@@ -1,6 +1,8 @@
 const KoaRouter = require('koa-router')
+const fs = require('fs')
+const path = require('path')
 const { SUCCESS, BAD_REQUEST, ERROR, FORBIDDEN } = require('../../utils/httpStatus')
-const { sleep } = require('../../utils')
+const { sleep, getRange } = require('../../utils')
 const { verifyJwtToken } = require('../../utils/jwtToken')
 
 const router = new KoaRouter()
@@ -14,6 +16,29 @@ router.get('/ok', async ctx => {
 /** 204 */
 router.get('/noContent', async ctx => {
   ctx.body = null
+})
+
+/** 206 */
+const pathResolve = dir => path.resolve(__dirname, '../../static/', dir)
+router.get('/partialContent', async ctx => {
+  const { filename } = ctx.query
+  const { size } = fs.statSync(pathResolve(filename))
+  const range = ctx.headers['range']
+  if (!range) {
+    ctx.set('Accept-Ranges', 'bytes')
+    ctx.body = fs.readFileSync(pathResolve(filename))
+    return
+  }
+  const { start, end } = getRange(range)
+  if (start >= size || end >= size) {
+    ctx.status = 416
+    ctx.body = null
+    return
+  }
+  ctx.status = 206
+  ctx.set('Accept-Ranges', 'bytes')
+  ctx.set('Content-Range', `bytes ${start}-${end ? end : size - 1}/${size}`)
+  ctx.body = fs.createReadStream(pathResolve(filename), { start, end })
 })
 
 /** 301 */

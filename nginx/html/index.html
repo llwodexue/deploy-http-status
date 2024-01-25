@@ -8,16 +8,29 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Cache" content="no-cache" />
     <link rel="icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./css/index.css" />
     <title>Koa</title>
   </head>
   <body>
-    <h1>Koa Client</h1>
-    <div>
-      <button id="httpErrorSend" style="margin: 0 10px 10px 0">测试失败状态码</button>
-      <button id="httpOkSend" style="margin: 0 10px 10px 0">测试成功状态码</button>
+    <h1>Koa client by nginx</h1>
+    <div class="box">
+      <button id="httpErrorSend">测试失败状态码</button>
+      <button id="httpOkSend">测试成功状态码</button>
+      <button id="downloadSerial">串行下载状态码</button>
+      <button id="downloadParallel">并行下载状态码</button>
     </div>
-    <button id="btnSend" style="margin: 0 10px 10px 0">发送正确消息到服务器</button>
-    <button id="btnSendError">发送错误消息到服务器</button>
+    <div class="box">
+      <button id="btnSend">发送正确消息到服务器</button>
+      <button id="btnSendError">发送错误消息到服务器</button>
+    </div>
+    <div class="box">
+      <button id="windowBtnDownload">window.open 直接下载</button>
+      <button id="aBtnDownload">a download 直接下载</button>
+      <button id="blobBtnDownload">Blob 直接下载</button>
+      <button id="base64BtnDownload">base64 直接下载</button>
+      <button id="serialDownload">串行下载</button>
+      <button id="parallelDownload">并行下载</button>
+    </div>
 
     <script src="./js/axios.1.5.0.min.js"></script>
     <script src="./js/socket.io.4.7.3.min.js"></script>
@@ -40,6 +53,7 @@
         return config
       })
       request.interceptors.response.use(response => {
+        if (response.config.responseType === 'blob' || response.config.method === 'head') return response
         return response.data
       })
       window.request = request
@@ -91,5 +105,6 @@
       fn()
     </script>
     <script src="./js/httpError.js"></script>
+    <script src="./js/download.js"></script>
   </body>
 </html>

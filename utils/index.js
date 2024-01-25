@@ -60,3 +60,18 @@ exports.sleep = function sleep(timer = 1000) {
     setTimeout(() => resolve(), timer)
   })
 }
+
+/**
+ * 匹配range头
+ * @param {*} range
+ * @returns
+ */
+exports.getRange = function getRange(range) {
+  const match = /bytes=([0-9]*)-([0-9]*)/.exec(range)
+  const requestRange = {}
+  if (match) {
+    if (match[1]) requestRange.start = Number(match[1])
+    if (match[2]) requestRange.end = Number(match[2])
+  }
+  return requestRange
+}

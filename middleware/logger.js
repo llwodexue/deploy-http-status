@@ -13,7 +13,7 @@ log4js.configure({
       alwaysIncludePattern: true,
       encoding: 'utf-8',
       keepFileExt: true,
-      filename: path.join(__dirname, '/logs/access/', 'access.log')
+      filename: path.join(__dirname, '../logs/access/', 'access.log')
     },
     // 系统日志
     application: {
@@ -22,7 +22,7 @@ log4js.configure({
       alwaysIncludePattern: true,
       encoding: 'utf-8',
       keepFileExt: true,
-      filename: path.join(__dirname, '/logs/application/', 'application.log')
+      filename: path.join(__dirname, '../logs/application/', 'application.log')
     },
     console: {
       type: 'console'
@@ -37,7 +37,11 @@ log4js.configure({
 
 const logger = log4js.getLogger('access')
 
+const whiteList = ['/http/partialContent', '/download/']
+
 const loggerMiddleware = async (ctx, next) => {
+  const flag = whiteList.some(i => ctx.url.startsWith(i))
+  if (flag) return next()
   const start = new Date()
   const decodeJwt = verifyJwtToken(ctx)
   let user = null
