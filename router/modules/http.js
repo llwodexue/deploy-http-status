@@ -12,6 +12,18 @@ router.prefix('/http')
 router.get('/ok', async ctx => {
   ctx.body = SUCCESS
 })
+router.get('/ok1', async ctx => {
+  ctx.body = SUCCESS
+})
+router.get('/ok2', async ctx => {
+  ctx.body = SUCCESS
+})
+router.get('/ok3', async ctx => {
+  ctx.body = SUCCESS
+})
+router.get('/ok4', async ctx => {
+  ctx.body = SUCCESS
+})
 
 /** 204 */
 router.get('/noContent', async ctx => {

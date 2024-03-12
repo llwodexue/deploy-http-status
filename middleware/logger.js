@@ -1,6 +1,7 @@
 const path = require('path')
 const log4js = require('log4js')
 const { verifyJwtToken } = require('../utils/jwtToken')
+const redisClient = require('../db/redis')
 
 const envLevel = process.env.NODE_ENV === 'prod' ? 'warn' : 'info'
 
@@ -52,12 +53,17 @@ const loggerMiddleware = async (ctx, next) => {
   const ms = new Date() - start
   const req = ctx.request
   const res = ctx.response
+  let httpNum = (await redisClient.get('httpNum')) ?? 0
+  httpNum = Number(httpNum) + 1
+  await redisClient.set('httpNum', httpNum)
   const msg = `
     请求用户: ${user},请求接口: ${req.url},请求类型: ${req.method}
     params入参: ${JSON.stringify(req.query)}
     body入参:  ${JSON.stringify(req.body)}
     返回结果: ${JSON.stringify(res.body)}
-    请求耗时: ${ms}ms\n`
+    请求耗时: ${ms}ms
+    请求地址: ${ctx.headers['x-real-ip'] || ctx.headers.host}
+    请求排序：第 ${httpNum} 个\n`
   logger.info(msg)
 }
 

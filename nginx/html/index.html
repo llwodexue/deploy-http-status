@@ -16,6 +16,7 @@
     <div class="box">
       <button id="httpErrorSend">测试失败状态码</button>
       <button id="httpOkSend">测试成功状态码</button>
+      <button id="ok200Send">测试200状态码</button>
     </div>
     <div class="box">
       <button id="btnSend">发送正确消息到服务器</button>
@@ -99,7 +100,12 @@
         window.socket.on('message', data => console.log(data))
       }
 
-      socketIo()
+      function sleep(timer = 100) {
+        return new Promise(resolve => {
+          setTimeout(() => resolve(), timer)
+        })
+      }
+      // socketIo()
       fn()
     </script>
     <script src="./js/httpError.js"></script>

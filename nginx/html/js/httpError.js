@@ -60,7 +60,7 @@
   }
 
   const httpErrorSend = document.getElementById('httpErrorSend')
-  httpErrorSend.onclick = () => {
+  httpErrorSend.onclick = async () => {
     gatewayTimeout()
     gatewayBad()
     serverError()
@@ -96,10 +96,62 @@
     })
   }
   const httpOkSend = document.getElementById('httpOkSend')
-  httpOkSend.onclick = () => {
-    movedPermanently()
-    found()
-    noContent()
+  httpOkSend.onclick = async () => {
+    await movedPermanently()
+    await found()
+    await noContent()
   }
 })()
 
+~(function () {
+  const request = window.request
+  /** 200 */
+  const ok = () => {
+    return new Promise(resolve => {
+      request({
+        method: 'get',
+        url: '/http/ok'
+      }).finally(() => resolve())
+    })
+  }
+  const ok1 = async () => {
+    return new Promise(resolve => {
+      request({
+        method: 'get',
+        url: '/http/ok1'
+      }).finally(() => resolve())
+    })
+  }
+  const ok2 = async () => {
+    return new Promise(resolve => {
+      request({
+        method: 'get',
+        url: '/http/ok2'
+      }).finally(() => resolve())
+    })
+  }
+  const ok3 = async () => {
+    return new Promise(resolve => {
+      request({
+        method: 'get',
+        url: '/http/ok3'
+      }).finally(() => resolve())
+    })
+  }
+  const ok4 = async () => {
+    return new Promise(resolve => {
+      request({
+        method: 'get',
+        url: '/http/ok4'
+      }).finally(() => resolve())
+    })
+  }
+  const ok200Send = document.getElementById('ok200Send')
+  ok200Send.onclick = async () => {
+    await ok()
+    await ok1()
+    await ok2()
+    await ok3()
+    await ok4()
+  }
+})()
