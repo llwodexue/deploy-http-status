@@ -53,14 +53,26 @@ router.get('/partialContent', async ctx => {
   ctx.body = fs.createReadStream(pathResolve(filename), { start, end })
 })
 
-/** 301 */
+/** 301 Permanent  */
 router.get('/movedPermanently', async ctx => {
   ctx.status = 301
   ctx.redirect('/api/http/ok')
 })
 
-/** 302 */
+/** 302 Temporary */
 router.get('/found', async ctx => {
+  ctx.redirect('/api/http/ok')
+})
+
+/** 307 Temporary  */
+router.get('/temporaryRedirect', async ctx => {
+  ctx.status = 307
+  ctx.redirect('/api/http/ok')
+})
+
+/** 308 Permanent  */
+router.get('/permanentRedirect', async ctx => {
+  ctx.status = 308
   ctx.redirect('/api/http/ok')
 })
 

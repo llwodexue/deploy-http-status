@@ -95,11 +95,27 @@
       url: '/http/found'
     })
   }
+  /** 308 */
+  const permanentRedirect = async () => {
+    await request({
+      method: 'get',
+      url: '/http/permanentRedirect'
+    })
+  }
+  /** 307 */
+  const temporaryRedirect = async () => {
+    await request({
+      method: 'get',
+      url: '/http/temporaryRedirect'
+    })
+  }
   const httpOkSend = document.getElementById('httpOkSend')
   httpOkSend.onclick = async () => {
     await movedPermanently()
     await found()
     await noContent()
+    await permanentRedirect()
+    await temporaryRedirect()
   }
 })()
 

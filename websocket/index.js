@@ -5,6 +5,7 @@ const listenAndEmitInfo = async io => {
     systemLogger.info('io is connected')
     socket.on('message', data => {
       console.log('message from client: ', data)
+      socket.emit('message from server: ', { name: 'cat', age: Math.floor(Math.random() * 100) })
     })
 
     /** error handler */

@@ -88,10 +88,7 @@
 
         const btnSend = document.getElementById('btnSend')
         btnSend.onclick = () => {
-          socket.emit('message', {
-            name: 'bird',
-            age: 12
-          })
+          socket.emit('message', { name: 'bird', age: Math.floor(Math.random() * 100) })
         }
         const btnSendError = document.getElementById('btnSendError')
         btnSendError.onclick = () => {
@@ -105,7 +102,7 @@
           setTimeout(() => resolve(), timer)
         })
       }
-      // socketIo()
+      socketIo()
       fn()
     </script>
     <script src="./js/httpError.js"></script>
