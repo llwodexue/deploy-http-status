@@ -10,5 +10,5 @@ module.exports = {
     ecmaVersion: 12
   },
   rules: {},
-  ignorePatterns: ['index*.html', '*.min.js']
+  ignorePatterns: ['index*.html', '*.min.js', 'login.html']
 }
