@@ -17,3 +17,5 @@
 127.0.0.1 - - [13/Mar/2024:09:23:37 +0800] "GET /js/httpError.js HTTP/2.0" 200 639 "https://127.0.0.1:9090/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 127.0.0.1 - - [13/Mar/2024:09:23:37 +0800] "GET /js/download.js HTTP/2.0" 200 1283 "https://127.0.0.1:9090/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 127.0.0.1 - - [13/Mar/2024:09:23:37 +0800] "GET /favicon.ico HTTP/2.0" 200 1374 "https://127.0.0.1:9090/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+127.0.0.1 - - [19/Mar/2024:10:40:50 +0800] "GET / HTTP/1.1" 200 100 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+127.0.0.1 - - [19/Mar/2024:10:40:50 +0800] "GET /favicon.ico HTTP/1.1" 200 100 "http://127.0.0.1:8096/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
