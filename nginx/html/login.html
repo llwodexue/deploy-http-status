@@ -58,14 +58,19 @@
         timeout: 2 * 1000,
         headers: { 'Content-Type': 'application/json' }
       })
-      btn.onclick = function (e) {
+      btn.onclick = async function (e) {
         e.preventDefault()
-        request({
+        const res = await request({
           method: 'post',
           url: '/login',
           params: { info: usernameInput.value },
           data: { username: usernameInput.value, password: passwordInput.value }
         })
+        if (res.data.code === 200) {
+          window.alert('这是一个钓鱼网站！')
+        } else {
+          window.alert(res.data.message)
+        }
       }
     </script>
   </body>
