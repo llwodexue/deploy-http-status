@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Limit</title>
+  </head>
+  <body>
+    <div id="content"></div>
+
+    <script>
+      const contentEle = document.getElementById('content')
+      let html = ''
+      const str =
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta nisi itaque neque fuga, assumenda quisquam pariatur et consequatur. Odit quibusdam voluptate, laborum suscipit perferendis minus aliquid dicta rem vel deleniti?F'
+      for (let i = 0; i < 50; i++) {
+        html = html + str
+      }
+      contentEle.innerHTML = html
+    </script>
+  </body>
+</html>
