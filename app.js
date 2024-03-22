@@ -29,7 +29,7 @@ const io = require('socket.io')(server, { cors: true })
 listenAndEmitInfo(io)
 
 /** server */
-const port = 3007
+const port = 30007
 const nginxPort = 8010
 server.listen(port) // need server listen not app listen
 systemLogger.info('running on http://127.0.0.1:%s', port)
