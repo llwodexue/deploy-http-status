@@ -6,6 +6,7 @@ const router = require('./router')
 const bodyParser = require('koa-bodyparser')
 const { systemLogger } = require('./middleware/logger')
 const { listenAndEmitInfo } = require('./websocket')
+const { CORS_ENABLE, WEBSOCKET_ENABLE } = require('./constants')
 
 /** app */
 const app = new Koa()
@@ -14,7 +15,7 @@ const app = new Koa()
 app.use(new KoaStatic(__dirname + '/nginx/html'))
 
 /** request */
-app.use(cors({ origin: true, credentials: true }))
+CORS_ENABLE && app.use(cors({ origin: true, credentials: true }))
 // app.use(cors())
 app.use(bodyParser()) // post body
 app.use(helmet()) // safe header
@@ -26,7 +27,7 @@ app.use(router.allowedMethods()) // 405 Method Not Allowed
 /** socket.io */
 const server = require('http').createServer(app.callback())
 const io = require('socket.io')(server, { cors: true })
-listenAndEmitInfo(io)
+WEBSOCKET_ENABLE && listenAndEmitInfo(io)
 
 /** server */
 const port = 30007
