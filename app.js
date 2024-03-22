@@ -6,7 +6,7 @@ const router = require('./router')
 const bodyParser = require('koa-bodyparser')
 const { systemLogger } = require('./middleware/logger')
 const { listenAndEmitInfo } = require('./websocket')
-const { CORS_ENABLE, WEBSOCKET_ENABLE } = require('./constants')
+const { CORS_ENABLE, WEBSOCKET_ENABLE, CORS_Fn } = require('./constants')
 
 /** app */
 const app = new Koa()
@@ -16,9 +16,10 @@ app.use(new KoaStatic(__dirname + '/nginx/html'))
 
 /** request */
 CORS_ENABLE && app.use(cors({ origin: true, credentials: true }))
+!CORS_ENABLE && CORS_Fn(app)
 // app.use(cors())
 app.use(bodyParser()) // post body
-app.use(helmet()) // safe header
+CORS_ENABLE && app.use(helmet()) // safe header
 
 /** router */
 app.use(router.routes())

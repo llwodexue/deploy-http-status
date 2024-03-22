@@ -35,12 +35,12 @@
     <div id="msg"></div>
     <div>
       <label for="baseURLInput">baseURL：</label>
-      <input id="baseURLInput" placeholder="默认为 http://localhost:3007" value="http://localhost:3007" />
+      <input id="baseURLInput" placeholder="默认为 http://localhost:30007" value="http://localhost:30007" />
       <br />
       <br />
 
       <label for="urlInput">请求路径：</label>
-      <input id="urlInput" placeholder="默认为 /cors" value="/cors" />
+      <input id="urlInput" placeholder="默认为 /cors" value="/cors/base" />
       <br />
       <br />
 
@@ -81,7 +81,7 @@
     <script src="./showMsg.js"></script>
     <script>
       $('#requestBtn').onClick(() => {
-        const baseURL = $('#baseURLInput').value || 'http://localhost:3007'
+        const baseURL = $('#baseURLInput').value || 'http://localhost:30007'
         const url = $('#urlInput').value || '/cors'
         const method = $('#methodSelect').value
         const header = $('#headerInput').value
